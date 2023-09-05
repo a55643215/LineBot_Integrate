@@ -12,7 +12,7 @@ from linebot.models import (
     PostbackEvent,QuickReply,QuickReplyButton,ConfirmTemplate,MessageAction,ButtonsTemplate
 )
 
-line_bot_api = LineBotApi('FGv8iZ1Ma5XCwmCqSFL9sKKd+VbCYJYhgFy5sthR8LaidOMMqeo0a1C/MOrDu2SzXXEnvjN6Nhfej6cXumQ3I8yp9w7QP6bYyqVQdOb54G5vCJdied6vfVNLBleiSf2UuY8zzAAMPZwa3++hf1862QdB04t89/1O/w1cDnyilFU=')
+line_bot_api = LineBotApi('Ihk8eFoBqjwSWAqUGPFEqpNxBY5TjdJUiLJO3hINiG3vmClr5Q2sAe6+HT9POGeU/ITi4GOmRRb4fGWMZ8buxEEOlyvB3FyOWvERxfqKKd42oPA35WXABMx6n8oK/YrVtVIuU7aMtiSOwBteLPg1OQdB04t89/1O/w1cDnyilFU=')
 # Channel access token
-handler = WebhookHandler('f1fa75e1b63d5245714ecf28668307f8') 
+handler = WebhookHandler('fe615012eaea781c5e2738fc6d38134e') 
 #Channel secret
