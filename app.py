@@ -125,7 +125,8 @@ def handle_postback(event):
         service_confirmed_event(event)
     elif data.get('action') == 'cancel':
         service_cancel_event(event)
-
+    elif data.get('action') == 'checkout':
+        print('yoyo checktou')
     #用get()來取得data中的資料，好處是如果備有data時會顯示None，而不會出線錯物
     
 
