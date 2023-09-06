@@ -61,7 +61,7 @@ class Products(Base):
                         ButtonComponent(
                             style='primary',
                             color='#1DB446',
-                            action=URIAction(label='Add to Cart',
+                            action=URIAction(label='加入購物車',
                                              uri='line://oaMessage/{base_id}/?{message}'.format(base_id='@491woafl',
                                                                                                 message=quote("{product}, 請輸入購買數量:".format(product=product.name)))),
                                              
