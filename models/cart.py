@@ -90,8 +90,8 @@ class Cart(object):
                     ButtonComponent(
                         style='primary',
                         color='#1DB446',
-                        action=PostbackAction(label='Checkout',
-                                              display_text='checkout',
+                        action=PostbackAction(label='結帳',
+                                              display_text='結帳',
                                               data='action=checkout')
                     ),
                     BoxComponent(
@@ -102,15 +102,15 @@ class Cart(object):
                                 style='primary',
                                 color='#aaaaaa',
                                 flex=3,
-                                action=MessageAction(label='Empty Cart',
-                                                     text='Empty cart'),
+                                action=MessageAction(label='清空購物車',
+                                                     text='清空購物車'),
                             ),
                             ButtonComponent(
                                 style='primary',
                                 color='#aaaaaa',
                                 flex=2,
-                                action=MessageAction(label='Add',
-                                                     text='add'),
+                                action=MessageAction(label='選購其他商品',
+                                                     text='再去逛逛'),
                             )
                         ]
 
@@ -138,15 +138,15 @@ class Cart(object):
             confirm_template = ConfirmTemplate(
                 text='好的, {} (組/個/罐) {}, 還需要其他的嗎?'.format(num_item, product_name),
                 actions=[
-                    MessageAction(label='選購其他商品', text='add'),
-                    MessageAction(label="去結帳", text="That's it")
+                    MessageAction(label='選購其他商品', text='再去逛逛'),
+                    MessageAction(label="去結帳", text="去結帳")
                 ])
 
             message = TemplateSendMessage(alt_text='還需要其他的嗎?', template=confirm_template)
 
         else:
             #如果沒有找到產品名稱就會回給用戶沒有這個產品
-            message = TextSendMessage(text="Sorry, We don't have {}.".format(product_name))
+            message = TextSendMessage(text="抱歉！找不到此商品： {}.".format(product_name))
         print(self.bucket())
         return  message
         

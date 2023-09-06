@@ -77,18 +77,18 @@ def handle_message(event):
     elif message_text == '@醫師群':
         pass
 
-    elif message_text == '@優惠商品':
+    elif message_text in ['@優惠商品','再去逛逛']:
         message=Products.list_all(event)
 
     elif "請輸入購買數量" in message_text:
         message = cart.ordering(event)
     
-    elif message_text in ['@購物車','my cart', 'cart', "that's it"]:#當出現'my cart', 'cart', "that's it"時
+    elif message_text in ['@購物車','my cart', 'cart', "去結帳"]:#當出現'my cart', 'cart', "that's it"時
 
         if cart.bucket():#當購物車裡面有東西時
             message = cart.display()#就會使用 display()顯示購物車內容
         else:
-            message = TextSendMessage(text='Your cart is empty now.')
+            message = TextSendMessage(text='您的購物並沒有任何商品！')
     
     
 
