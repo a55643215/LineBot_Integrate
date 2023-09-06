@@ -63,7 +63,7 @@ class Products(Base):
                             color='#1DB446',
                             action=URIAction(label='Add to Cart',
                                              uri='line://oaMessage/{base_id}/?{message}'.format(base_id='@491woafl',
-                                                                                                message=quote("{product}, I'd like to have:".format(product=product.name)))),
+                                                                                                message=quote("{product}, 請輸入購買數量:".format(product=product.name)))),
                                              
                         )
                     ]
