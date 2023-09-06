@@ -47,7 +47,7 @@ def handle_message(event):
     user = User.query.filter(User.line_id == event.source.user_id).first()#取得user的第一筆資料
     #如果沒有user資料時，才會透過api去取得
     if not user:
-        
+
         profile = line_bot_api.get_profile(event.source.user_id)#Line API 中說明get_profile可以取得的資料
         print(profile.display_name)
         print(profile.user_id)#相同的好以會因為不同的profile 而有不同的user_id
@@ -76,7 +76,7 @@ def handle_message(event):
         pass
 
     elif message_text == '@優惠商品':
-        message = Products.list_all()
+        Products.list_all(event)
     
     elif message_text == '@購物車':
         pass
