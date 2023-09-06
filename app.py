@@ -75,7 +75,7 @@ def handle_message(event):
         service_category_event(event)
 
     elif message_text.startswith('*'):
-        if event.source.user_id not in ['U135d0047f682b28ef4001bcb47d0d21f']:
+        if event.source.user_id not in ['U6df79bdbef1aff5b1e3d28d84d2fb586']:
             return
         if message_text in ['*data', '*d']:
             list_reservation_event(event)
