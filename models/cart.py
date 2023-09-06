@@ -138,11 +138,11 @@ class Cart(object):
             confirm_template = ConfirmTemplate(
                 text='好的, {} (組/個/罐) {}, 還需要其他的嗎?'.format(num_item, product_name),
                 actions=[
-                    MessageAction(label='Add', text='add'),
-                    MessageAction(label="That's it", text="That's it")
+                    MessageAction(label='選購其他商品', text='add'),
+                    MessageAction(label="去結帳", text="That's it")
                 ])
 
-            message = TemplateSendMessage(alt_text='anything else?', template=confirm_template)
+            message = TemplateSendMessage(alt_text='還需要其他的嗎?', template=confirm_template)
 
         else:
             #如果沒有找到產品名稱就會回給用戶沒有這個產品
