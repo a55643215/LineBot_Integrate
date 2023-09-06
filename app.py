@@ -202,7 +202,23 @@ def handle_postback(event):
     return 'OK'
 
     #用get()來取得data中的資料，好處是如果備有data時會顯示None，而不會出線錯物
-    
+@app.route("/confirm")
+def confirm():
+    transaction_id = request.args.get('transactionId')
+    order = db_session.query(Orders).filter(Orders.transaction_id == transaction_id).first()
+
+    if order:
+        line_pay = LinePay()
+        line_pay.confirm(transaction_id=transaction_id, amount=order.amount)
+
+        order.is_pay = True#確認收款無誤時就會改成已付款
+        db_session.commit()
+        
+        #傳收據給用戶
+        message = order.display_receipt()
+        line_bot_api.push_message(to=order.user_id, messages=message)
+
+        return '<h1>Your payment is successful. thanks for your purchase.</h1>'
 
 ################## 解除封鎖 ####################
 @handler.add(FollowEvent)
