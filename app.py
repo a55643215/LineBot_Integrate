@@ -157,5 +157,5 @@ def init_products():
 
 
 if __name__ == '__main__':
-    init_products
+    init_products()
     app.run()
