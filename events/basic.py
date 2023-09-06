@@ -47,16 +47,16 @@ def about_us_event(event):
 
 
 #22.63539983180636, 120.30192498466002
-def location_event(event):
-    location_message = LocationSendMessage(
-        title = "醫美診所",
-        address='高雄市新興區中山一路243號',
-        latitude=22.63539983180636,
-        longitude=120.30192498466002
-    )
+# def location_event(event):
+#     location_message = LocationSendMessage(
+#         title = "醫美診所",
+#         address='高雄市新興區中山一路243號',
+#         latitude=22.63539983180636,
+#         longitude=120.30192498466002
+#     )
 
-    line_bot_api.reply_message(
-        event.reply_token,
-        location_message
-    )
+#     line_bot_api.reply_message(
+#         event.reply_token,
+#         location_message
+#     )
 
