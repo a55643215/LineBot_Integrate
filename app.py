@@ -1,16 +1,22 @@
 from flask import Flask,request,abort
-from linebot.models import *
+from database import db_session, init_db
+from extensions import db, migrate
 from events.service import *
-from line_bot_api import *
 from events.basic import *
 from events.admin import *
-from extensions import db, migrate
+from linebot.models import *
+from line_bot_api import *
+from config import Config
+from models.cart import *
 from models.user import User    
-from database import db_session, init_db
 from models.product import Products
-from models.cart import Cart
-import os
 
+from models.item import Items
+from models.order import Orders
+from models.linepay import LinePay
+
+import os
+import uuid
 app = Flask(__name__)
 #admin: !QAZ2wsx資料庫的帳號和密碼
 #讓程式自己去判斷如果是測試端就會使用APP_SETTINGS
@@ -126,7 +132,75 @@ def handle_postback(event):
     elif data.get('action') == 'cancel':
         service_cancel_event(event)
     elif data.get('action') == 'checkout':
-        print('yoyo checktou')
+
+        user_id = event.source.user_id#取得user_id
+
+        cart = Cart(user_id=user_id)#透過user_id取得購物車
+
+        if not cart.bucket():#判斷購物車裡面有沒有資料，沒有就回傳購物車是空的
+            message = TextSendMessage(text='您的購物並沒有任何商品！')
+
+            line_bot_api.reply_message(event.reply_token, [message])
+
+            return 'OK'
+
+        order_id = uuid.uuid4().hex#如果有訂單的話就會使用uuid的套件來建立，因為它可以建立獨一無二的值
+
+        total = 0 #總金額
+        items = [] #暫存訂單項目
+
+        for product_name, num in cart.bucket().items():#透過迴圈把項目轉成訂單項目物件
+            #透過產品名稱搜尋產品是不是存在
+            product = db_session.query(Products).filter(Products.name.ilike(product_name)).first()
+            #接著產生訂單項目的物件
+            item = Items(product_id=product.id,
+                         product_name=product.name,
+                         product_price=product.price,
+                         order_id=order_id,
+                         quantity=num)
+
+            items.append(item)
+
+            total += product.price * int(num)#訂單價格 * 訂購數量
+        #訂單項目物件都建立後就會清空購物車
+        cart.reset()
+        #建立LinePay的物件
+        line_pay = LinePay()
+        #再使用line_pay.pay的方法，最後就會回覆像postman的格式
+        info = line_pay.pay(product_name='LSTORE',
+                            amount=total,
+                            order_id=order_id,
+                            product_image_url=Config.STORE_IMAGE_URL)
+        #取得付款連結和transactionId後
+        pay_web_url = info['paymentUrl']['web']
+        transaction_id = info['transactionId']
+        #接著就會產生訂單
+        order = Orders(id=order_id,
+                       transaction_id=transaction_id,
+                       is_pay=False,
+                       amount=total,
+                       user_id=user_id)
+        #接著把訂單和訂單項目加入資料庫中
+        db_session.add(order)
+
+        for item in items:
+            db_session.add(item)
+
+        db_session.commit()
+        #最後告知用戶並提醒付款
+        message = TemplateSendMessage(
+            alt_text='Thank you, please go ahead to the payment.',
+            template=ButtonsTemplate(
+                text='Thank you, please go ahead to the payment.',
+                actions=[
+                    URIAction(label='Pay NT${}'.format(order.amount),
+                              uri=pay_web_url)
+                ]))
+
+        line_bot_api.reply_message(event.reply_token, [message])
+
+    return 'OK'
+
     #用get()來取得data中的資料，好處是如果備有data時會顯示None，而不會出線錯物
     
 
