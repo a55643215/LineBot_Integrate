@@ -28,4 +28,6 @@ urllib3==1.26.7
 Werkzeug==2.0.2
 yarl==1.7.2
 gunicorn==20.1.0
-SQLAlchemy-Utils==0.34.0
+SQLAlchemy-Utils
+psycopg2-binary==2.8.3
+alembic
