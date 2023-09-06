@@ -89,7 +89,11 @@ def handle_message(event):
             message = cart.display()#就會使用 display()顯示購物車內容
         else:
             message = TextSendMessage(text='您的購物並沒有任何商品！')
-    
+    elif message_text == '清空購物車':
+
+        cart.reset()
+
+        message = TextSendMessage(text='您的購物車已清空.')
     
 
     if message:
