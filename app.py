@@ -83,7 +83,7 @@ def handle_message(event):
     elif "請輸入購買數量" in message_text:
         message = cart.ordering(event)
     
-    elif message_text in ['@購物車','my cart', 'cart', "去結帳"]:#當出現'my cart', 'cart', "that's it"時
+    elif message_text in ['@購物車','my cart', 'cart', "查看購物車"]:#當出現'my cart', 'cart', "that's it"時
 
         if cart.bucket():#當購物車裡面有東西時
             message = cart.display()#就會使用 display()顯示購物車內容

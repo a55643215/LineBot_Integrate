@@ -108,7 +108,7 @@ class Cart(object):
                             ButtonComponent(
                                 style='primary',
                                 color='#aaaaaa',
-                                flex=2,
+                                flex=3,
                                 action=MessageAction(label='選購其他商品',
                                                      text='再去逛逛'),
                             )
@@ -139,7 +139,7 @@ class Cart(object):
                 text='好的, {} (組/個/罐) {}, 還需要其他的嗎?'.format(num_item, product_name),
                 actions=[
                     MessageAction(label='選購其他商品', text='再去逛逛'),
-                    MessageAction(label="去結帳", text="去結帳")
+                    MessageAction(label="查看購物車", text="查看購物車")
                 ])
 
             message = TemplateSendMessage(alt_text='還需要其他的嗎?', template=confirm_template)
