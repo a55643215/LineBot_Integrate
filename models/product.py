@@ -2,8 +2,8 @@ from sqlalchemy import Column,String, Integer
 from linebot.models import *
 from database import Base, db_session
 from urllib.parse import quote
-
-
+from line_bot_api import *
+ 
 
 class Products(Base):
     __tablename__ = 'products'
@@ -76,5 +76,7 @@ class Products(Base):
 
         message = FlexSendMessage(alt_text='products', contents=carousel_container)
 
-        return message
+        line_bot_api.reply_message(
+        event.reply_token,
+        message) 
         
