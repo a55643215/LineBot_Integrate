@@ -18,7 +18,7 @@ class Products(Base):
 
 #列出所有的產品
     @staticmethod
-    def list_all(event):
+    def list_all():
         products = db_session.query(Products).all()#抓取資料庫中所有產品的資料
 
         bubbles = []
