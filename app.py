@@ -8,6 +8,7 @@ from extensions import db, migrate
 from models.user import User    
 from database import db_session, init_db
 from models.product import Products
+from models.cart import Cart
 import os
 
 app = Flask(__name__)
@@ -60,6 +61,7 @@ def handle_message(event):
     print(user.line_id)
     print(user.display_name)
 
+    cart = Cart(user_id=event.source.user_id)
 
     if message_text == '@關於我們':
         about_us_event(event)
@@ -76,10 +78,26 @@ def handle_message(event):
         pass
 
     elif message_text == '@優惠商品':
-        Products.list_all(event)
+        message=Products.list_all(event)
+
+    elif "請輸入購買數量" in message_text:
+        message = cart.ordering(event)
+    
+    elif message_text in ['my cart', 'cart', "that's it"]:#當出現'my cart', 'cart', "that's it"時
+
+        if cart.bucket():#當購物車裡面有東西時
+            message = cart.display()#就會使用 display()顯示購物車內容
+        else:
+            message = TextSendMessage(text='Your cart is empty now.')
     
     elif message_text == '@購物車':
         pass
+
+    if message:
+        line_bot_api.reply_message(
+        event.reply_token,
+        message) 
+
         
 
 

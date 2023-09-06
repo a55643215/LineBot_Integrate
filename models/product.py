@@ -76,7 +76,5 @@ class Products(Base):
 
         message = FlexSendMessage(alt_text='products', contents=carousel_container)
 
-        line_bot_api.reply_message(
-        event.reply_token,
-        message) 
+        return message
         
