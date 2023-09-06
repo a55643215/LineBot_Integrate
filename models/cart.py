@@ -136,7 +136,7 @@ class Cart(object):
             self.add(product=product_name, num=num_item)
             #然後利用confirm_template的格式詢問用戶是否還要加入？
             confirm_template = ConfirmTemplate(
-                text='好的, {} {}, 還需要其他的嗎?'.format(num_item, product_name),
+                text='好的, {} (組/個/罐) {}, 還需要其他的嗎?'.format(num_item, product_name),
                 actions=[
                     MessageAction(label='Add', text='add'),
                     MessageAction(label="That's it", text="That's it")
